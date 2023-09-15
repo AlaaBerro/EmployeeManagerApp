@@ -1,0 +1,110 @@
+﻿@model IEnumerable<EmployeeManagerApp.Models.Employee>
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+<h1>Current Employees</h1>
+
+<div class="btn-group">
+    <button class="btn btn-sm btn-primary m-2" id="btnAddEmployee">Add Employee</button>
+    <a class="btn btn-sm btn-primary m-2" asp-controller="EmployeesJobs" asp-action="Index">All Employees Jobs</a>
+</div>
+
+
+
+<table class="table table-bordered">
+    <thead>
+        <tr class="text-center">
+            <th>Id</th>
+            <th>Name</th>
+            <th>BirthDate</th>
+            <th>Phone</th>
+            <th>EmploymentDate</th>
+            <th>Governorate</th>
+            <th>IsDeleted</th>
+            <th>IsProbation</th>
+            <th>Operations</th>
+        </tr>
+    </thead>
+    <tbody class="text-center" id="table_data"></tbody>
+</table> 
+
+    <div id="right-side">
+        <!-- Employee data will be displayed here -->
+    </div>
+
+
+    <!--     Modal    -->
+<div class="madal fade modal" id="EmployeeMadal">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h1 class="text-info modal-title" id="employeeHeading">Add Employee</h1>
+                <button class="close text-danger" data-dismiss="modal">&times;</button>
+            </div>
+            <div class="modal-body">
+                <form method="post"> 
+                    <div class="form-group" id="empId">
+                        <label>Id</label>
+                        <input type="text" class="form-control" id="EmployeeId" disabled="disabled" />
+                    </div>
+                    <div class="form-group">
+                        <label for="Name">Name</label>
+                        <input type="text" name="Name" id="Name" class="form-control" placeholder="Enter name" required autocomplete="off" />
+                    </div>
+                    <div class="form-group">
+                        <label for="BirthDate">Birth Date</label>
+                        <input type="date" name="BirthDate" id="BirthDate" class="form-control" required />
+                    </div>
+                    <div class="form-group">
+                        <label for="Phone">Phone</label>
+                        <input type="tel" name="Phone" id="Phone" class="form-control" required autocomplete="off" />
+                    </div>
+                    <div class="form-group">
+                        <label for="EmploymentDate">Employment Date</label>
+                        <input type="date" name="EmploymentDate" id="EmploymentDate" class="form-control" />
+                    </div>
+                    <div class="form-group">
+                        <label for="Governorate">Governorate</label>
+                        <select name="Governorate" id="Governorate" class="form-control" required>
+                            <option value="">Select Governorate</option>
+                            @foreach (var governorate in Enum.GetValues(typeof(Governorate)))
+                            {
+                                <option value="@governorate">@governorate</option>
+                            }
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="IsProbation">Is on Probation</label>
+                        <input type="checkbox" name="IsProbation" id="IsProbation" class="form-check-input" />
+                    </div>
+                    <div class="form-group">
+                        <label for="IsDeleted">Is Deleted</label>
+                        <input type="checkbox" name="IsDeleted" id="IsDeleted" class="form-check-input" />
+                    </div>
+                </form>
+
+            </div>
+            <div class="modal-footer">
+                <button class="btn btn-primary" onclick="AddEmployee();" id="AddEmployee">Save</button>
+                <button class="btn btn-warning" onclick="UpdateEmployee();" style="display:none" id="btnUpdate">Update</button>
+                <button class="btn btn-danger btn-default" data-dismiss="modal">Close</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div>
+    <input type="hidden" id="urlEmployeeData" value="@Url.Action("EmployeeList","Employees")" />
+</div>
+
+
+
+<script src="~/lib/jquery/dist/jquery.min.js"></script>
+<script src="~/lib/jquery/dist/jquery.js"></script>
+<script src="~/js/customemployee.js"></script>
+
+
+
+
